@@ -13,7 +13,7 @@ var connection = require('./utils/connection');
 
 var User = require('./routes/userRoutes');
 var Payment = require('./routes/paymentRoutes');
-var Bitcoin = require('./routes/bitcoinRoutes');
+// var Bitcoin = require('./routes/bitcoinRoutes');
 
 app.listen(process.env.PORT, () => {
 	console.log(`Running on port ${process.env.PORT} 👍.`);
@@ -37,7 +37,7 @@ app.use(passport.session());
 
 app.use('/users', User);
 app.use('/payment', Payment);
-app.use('/bitcoin', Bitcoin);
+// app.use('/bitcoin', Bitcoin);
 
 app.all('*', (req, res, next) => {
 	next(new ErrorHandler('No Api Route Hit -- Bad Request', 404));
