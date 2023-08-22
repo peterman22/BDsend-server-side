@@ -1,17 +1,8 @@
 var mongoose = require('mongoose');
 var passportLocalMongoose = require('passport-local-mongoose');
 var Schema = mongoose.Schema;
-var { v4: uuidv4 } = require('uuid');
 
-const generateUniqueNumbers = length => {
-	let uniqueNumber = '';
-	while (uniqueNumber.length < length) {
-		uniqueNumber += uuidv4().replace(/-/g, '');
-	}
-	return uniqueNumber.slice(0, length);
-};
-
-var User = new Schema({
+var userSchema = new Schema({
 	email: { type: String, default: '' },
 	phonenumber: {
 		type: String,
@@ -27,14 +18,35 @@ var User = new Schema({
 	country: { type: String, default: '' },
 	address: { type: String, default: '' },
 	receivingId: {
-		type: String,
-		default: generateUniqueNumbers(9),
+		type: Number,
+		unqiue: true,
 	},
 	wallet: { type: Number, default: 0 },
 });
 
-User.plugin(passportLocalMongoose, {
+userSchema.pre('save', async function (next) {
+	if (!this.receivingId) {
+		this.receivingId = await generateUniqueNumbers(User);
+	}
+	next();
+});
+userSchema.plugin(passportLocalMongoose, {
 	usernameField: 'email',
 });
 
-module.exports = mongoose.model('User', User);
+const generateUniqueNumbers = async model => {
+	while (true) {
+		const candidateNumber = Math.floor(
+			100000000 + Math.random() * 900000000
+		);
+		const existingDocument = await model.findOne({
+			receivingId: candidateNumber,
+		});
+		if (!existingDocument) {
+			return candidateNumber;
+		}
+	}
+};
+
+const User = mongoose.model('User', userSchema);
+module.exports = User;
