@@ -13,6 +13,7 @@ var connection = require('./utils/connection');
 
 var User = require('./routes/userRoutes');
 var Payment = require('./routes/paymentRoutes');
+var Admin = require('./routes/adminRoutes');
 // var Bitcoin = require('./routes/bitcoinRoutes');
 
 app.listen(process.env.PORT, () => {
@@ -37,6 +38,7 @@ app.use(passport.session());
 
 app.use('/users', User);
 app.use('/payment', Payment);
+app.use('/admin', Admin);
 // app.use('/bitcoin', Bitcoin);
 
 app.all('*', (req, res, next) => {
