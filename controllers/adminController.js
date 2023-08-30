@@ -6,6 +6,7 @@ var ErrorHandler = require('../utils/error');
 var User = require('../models/users');
 var Admin = require('../models/admin');
 var Transaction = require('../models/transaction');
+var Rate = require('../models/rate');
 
 exports.register = async (req, res, next) => {
 	var exists = await Admin.findOne({
@@ -151,4 +152,14 @@ exports.mainDashboard = asyncHandler(async (req, res) => {
 		nigerian: nigerPer,
 		other: otherPer,
 	});
+});
+
+exports.updateRate = asyncHandler(async (req, res) => {
+	await Rate.updateMany({ amount: req.body.amount });
+	res.status(202).json({ message: 'Rate updated successfully' });
+});
+
+exports.getRate = asyncHandler(async (req, res) => {
+	const rate = await Rate.find({});
+	res.status(200).json({ rate });
 });

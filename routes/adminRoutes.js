@@ -7,6 +7,7 @@ var adminController = require('../controllers/adminController');
 router.get('/info', authenticate.verifyAdmin, adminController.getUser);
 router.get('/main', authenticate.verifyAdmin, adminController.mainDashboard);
 router.get('/users/list', authenticate.verifyAdmin, adminController.getUsers);
+router.get('/rate/get', authenticate.verifyAdmin, adminController.getRate);
 router.post('/register', adminController.register);
 router.post(
 	'/signin',
@@ -32,6 +33,11 @@ router.delete(
 	'/profile/user/delete/:id',
 	authenticate.verifyAdmin,
 	adminController.deleteUser
+);
+router.patch(
+	'/rate/update',
+	authenticate.verifyAdmin,
+	adminController.updateRate
 );
 
 module.exports = router;
