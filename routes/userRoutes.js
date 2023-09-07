@@ -34,5 +34,10 @@ router.patch(
 	authenticate.verifyUser,
 	userController.updateWallet
 );
+router.patch(
+	'/update-wallet/deduct/:amount',
+	authenticate.verifyUser,
+	userController.updateWallet
+);
 
 module.exports = router;

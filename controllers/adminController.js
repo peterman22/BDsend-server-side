@@ -131,6 +131,7 @@ exports.mainDashboard = asyncHandler(async (req, res) => {
 			$group: {
 				_id: 'none',
 				totalAmount: { $sum: '$totaldeposit' },
+				totalWithdrawl: { $sum: '$totalwithdrawl' },
 			},
 		},
 	]);
@@ -147,7 +148,8 @@ exports.mainDashboard = asyncHandler(async (req, res) => {
 		totalTransaction:
 			totalTransaction.length > 0 ? totalTransaction[0].totalAmount : 0,
 		totalDeposit: totalDeposit.length > 0 ? totalDeposit[0].totalAmount : 0,
-		totalWithdrawl: 0,
+		totalWithdrawl:
+			totalDeposit.length > 0 ? totalDeposit[0].totalWithdrawl : 0,
 		american: amerPer,
 		nigerian: nigerPer,
 		other: otherPer,

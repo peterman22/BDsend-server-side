@@ -176,3 +176,11 @@ exports.updateWallet = asyncHandler(async (req, res) => {
 	await User.findByIdAndUpdate(req.user._id, update);
 	res.status(204).json();
 });
+
+exports.updateWalletDeduct = asyncHandler(async (req, res) => {
+	let update = {
+		wallet: req.user.wallet - JSON.parse(req.params.amount),
+	};
+	await User.findByIdAndUpdate(req.user._id, update);
+	res.status(204).json();
+});

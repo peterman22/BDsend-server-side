@@ -73,3 +73,12 @@ exports.recentTransactionHistory = asyncHandler(async (req, res, next) => {
 		.populate('receiver');
 	res.status(200).json({ history });
 });
+
+exports.withdrawlMoney = asyncHandler(async (req, res, next) => {
+	let update = {
+		wallet: req.user.wallet - JSON.parse(req.params.amount),
+		totalwithdrawl: req.user.totalwithdrawl + JSON.parse(req.params.amount),
+	};
+	await User.findByIdAndUpdate(req.user._id, update);
+	res.status(204).json();
+});

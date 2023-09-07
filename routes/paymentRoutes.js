@@ -25,5 +25,10 @@ router.patch(
 	paymentController.checkBalance,
 	paymentController.transferMoney
 );
+router.patch(
+	'/withdraw/money/:amount',
+	authenticate.verifyUser,
+	paymentController.withdrawlMoney
+);
 
 module.exports = router;

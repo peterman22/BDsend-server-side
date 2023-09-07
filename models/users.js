@@ -24,6 +24,7 @@ var userSchema = new Schema({
 	wallet: { type: Number, default: 0 },
 	active: { type: Boolean, default: true },
 	totaldeposit: { type: Number, default: 0 },
+	totalwithdrawl: { type: Number, default: 0 },
 });
 
 userSchema.pre('save', async function (next) {
