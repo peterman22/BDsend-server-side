@@ -40,4 +40,27 @@ router.patch(
 	userController.updateWallet
 );
 
+//TODO: requests
+router.get(
+	'/requests/created',
+	authenticate.verifyUser,
+	userController.getRequestsCreated
+);
+router.get('/requests', authenticate.verifyUser, userController.getRequests);
+router.post(
+	'/request/create',
+	authenticate.verifyUser,
+	userController.createRequest
+);
+router.patch(
+	'/request/reject/:id',
+	authenticate.verifyUser,
+	userController.rejectRequest
+);
+router.patch(
+	'/request/accept/:id',
+	authenticate.verifyUser,
+	userController.acceptRequest
+);
+
 module.exports = router;

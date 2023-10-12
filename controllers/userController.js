@@ -7,6 +7,7 @@ var ErrorHandler = require('../utils/error');
 
 var User = require('../models/users');
 var Otp = require('../models/otp');
+var Request = require('../models/request');
 
 exports.register = async (req, res, next) => {
 	var exists = await User.findOne({
@@ -183,4 +184,59 @@ exports.updateWalletDeduct = asyncHandler(async (req, res) => {
 	};
 	await User.findByIdAndUpdate(req.user._id, update);
 	res.status(204).json();
+});
+
+exports.createRequest = asyncHandler(async (req, res) => {
+	let user = await User.findOne({ receivingId: req.body.receiving_id });
+	if (!user) {
+		return res.status(400).json({ message: 'No such user exists.' });
+	}
+	await Request.create({
+		requested_by: req.user.id,
+		requested_from: user.id,
+		status: 'pending',
+		amount: req.body.amount,
+	});
+	res.status(201).json({ message: 'Request created successfully.' });
+});
+
+exports.getRequestsCreated = asyncHandler(async (req, res) => {
+	let requests = await Request.find({ requested_by: req.user.id })
+		.populate('requested_by')
+		.populate('requested_from');
+	res.status(200).json({ requests });
+});
+
+exports.getRequests = asyncHandler(async (req, res) => {
+	let requests = await Request.find({
+		requested_from: req.user.id,
+		status: 'pending',
+	})
+		.populate('requested_by')
+		.populate('requested_from');
+	res.status(200).json({ requests });
+});
+
+exports.rejectRequest = asyncHandler(async (req, res) => {
+	await Request.findByIdAndUpdate(req.params.id, {
+		status: 'rejected',
+	});
+	res.status(200).json({ message: 'Request rejected.' });
+});
+
+exports.acceptRequest = asyncHandler(async (req, res) => {
+	let request = await Request.findById(req.params.id);
+	if (req.user.wallet < request.amount) {
+		return res.status(400).json({ message: 'Not enough balance.' });
+	}
+	await User.findByIdAndUpdate(req.user.id, {
+		$inc: { wallet: -amount },
+	});
+	await User.findByIdAndUpdate(request.requested_by, {
+		$inc: { wallet: amount },
+	});
+	await Request.findByIdAndUpdate(req.params.id, {
+		status: 'accepted',
+	});
+	res.status(200).json({ message: 'Request accepted.' });
 });
