@@ -25,11 +25,6 @@ router.patch(
 	userController.passwordChange
 );
 router.patch(
-	'/change-password',
-	passport.authenticate('local'),
-	userController.passwordChange
-);
-router.patch(
 	'/update-wallet/:amount',
 	authenticate.verifyUser,
 	userController.updateWallet
