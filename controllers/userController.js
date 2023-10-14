@@ -124,8 +124,8 @@ exports.verifyOtp = asyncHandler(async (req, res, next) => {
 });
 
 exports.passwordReset = asyncHandler(async (req, res, next) => {
-	let User = await User.findOne({ email: req.body.email });
-	let newUser = await User.setPassword(req.body.password);
+	let user = await User.findOne({ email: req.body.email });
+	let newUser = await user.setPassword(req.body.password);
 	newUser.save();
 	res.status(200).json({ message: 'Password reset successfully.' });
 });
