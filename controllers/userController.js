@@ -230,10 +230,10 @@ exports.acceptRequest = asyncHandler(async (req, res) => {
 		return res.status(400).json({ message: 'Not enough balance.' });
 	}
 	await User.findByIdAndUpdate(req.user.id, {
-		$inc: { wallet: -amount },
+		$inc: { wallet: -request.amount },
 	});
 	await User.findByIdAndUpdate(request.requested_by, {
-		$inc: { wallet: amount },
+		$inc: { wallet: request.amount },
 	});
 	await Request.findByIdAndUpdate(req.params.id, {
 		status: 'accepted',
