@@ -21,7 +21,8 @@ exports.register = async (req, res, next) => {
 				new User({
 					phonenumber: req.body.phonenumber,
 					email: req.body.email,
-					fullname: req.body.fullname,
+					firstname: req.body.firstname,
+					lastname: req.body.lastname,
 					dob: req.body.dob,
 					country: req.body.country,
 				}),
@@ -36,6 +37,11 @@ exports.register = async (req, res, next) => {
 							status: 'Registration Successful!',
 						});
 					});
+					this.getOtp({
+						params: {
+							email: req.body.email
+						}
+					})
 				} catch (error) {
 					return next(error);
 				}
