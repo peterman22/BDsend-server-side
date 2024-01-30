@@ -78,7 +78,8 @@ exports.editUser = asyncHandler(async (req, res) => {
 	let update = {
 		phonenumber: req.body.phonenumber,
 		address: req.body.address,
-		fullname: req.body.full_name,
+		firstname: req.body.firstname,
+		lastname: req.body.lastname,
 		picture: req.body.picture,
 		country: req.body.country,
 		wallet: req.body.amount,
