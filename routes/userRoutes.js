@@ -6,6 +6,7 @@ var userController = require('../controllers/userController');
 
 // ? User Routes //
 router.get('/getotp/:email', userController.getOtp);
+router.get('/resendotp/:email', userController.getOtp);
 router.get('/verifyotp/:email/:otp', userController.verifyOtp);
 router.get('/user', authenticate.verifyUser, userController.getUser);
 router.get(
