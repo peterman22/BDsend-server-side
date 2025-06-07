@@ -9,9 +9,9 @@ var Transaction = require('../models/transaction');
 var Rate = require('../models/rate');
 
 exports.register = async (req, res, next) => {
-	var exists = await Admin.findOne({
-		username: req.body.email,
-	});
+        var exists = await Admin.findOne({
+                username: req.body.username,
+        });
 	if (exists) {
 		next(
 			new ErrorHandler('Username already associated with an account', 409)

@@ -49,9 +49,9 @@ exports.transferMoney = asyncHandler(async (req, res, next) => {
 			status: 'Success',
 		});
 		return res.status(204).json({ message: 'Money transferred.' });
-	} else {
-		return res.status(400).json({ messsage: 'Invalid Receiving Id.' });
-	}
+        } else {
+                return res.status(400).json({ message: 'Invalid Receiving Id.' });
+        }
 });
 
 exports.transactionHistory = asyncHandler(async (req, res, next) => {

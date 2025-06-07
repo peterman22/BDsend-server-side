@@ -31,9 +31,9 @@ router.patch(
 	userController.updateWallet
 );
 router.patch(
-	'/update-wallet/deduct/:amount',
-	authenticate.verifyUser,
-	userController.updateWallet
+        '/update-wallet/deduct/:amount',
+        authenticate.verifyUser,
+        userController.updateWalletDeduct
 );
 
 //TODO: requests

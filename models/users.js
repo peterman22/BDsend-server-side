@@ -18,10 +18,10 @@ var userSchema = new Schema({
 	dob: { type: String, default: '' },
 	country: { type: String, default: '' },
 	address: { type: String, default: '' },
-	receivingId: {
-		type: Number,
-		unqiue: true,
-	},
+        receivingId: {
+                type: Number,
+                unique: true,
+        },
 	wallet: { type: Number, default: 0 },
 	active: { type: Boolean, default: true },
 	totaldeposit: { type: Number, default: 0 },
